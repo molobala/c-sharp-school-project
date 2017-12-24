@@ -1,0 +1,29 @@
+﻿@using Entity
+@model Entity.Ville
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="container">
+    @using (Html.BeginForm("EditVille", "Admin", FormMethod.Post, new {@class = "form"}))
+    {
+        <div class="modal-body">
+            @Html.Hidden("id",@Model.Id);
+            <div class="form-group">
+                @Html.LabelFor( v => v.Name,new {@class="control-label"})
+                @Html.TextBoxFor(v=>v.Name,new {@class="form-control"})
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(vehicule => vehicule.Description,new {@class="control-label"})
+                @Html.TextAreaFor(vehicule=>vehicule.Description,new {@class="form-control"})
+                @Html.ValidationMessageFor(model => model.Description,"Error",new {@class="alert alert-danger"})
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="row">
+                <span class="badge pointer btn pull-left ret">@Html.ActionLink("Go to Home","Index","Admin")</span>
+                <button type="submit" class="btn btn-success">Save</button>
+            </div>
+        </div>
+    }
+</div>

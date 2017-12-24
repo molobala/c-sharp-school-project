@@ -1,0 +1,99 @@
+﻿@using Entity
+@{
+    
+    ViewData["Title"] = "Search Page";
+}
+<style>
+    .item {
+        border: 1px solid transparent;
+        padding: 10px 5px;
+        margin-bottom: 10px;
+        position: relative;
+        box-shadow: 0px 0px 4px #444;
+        background-color: #eee;
+    }
+    .item .vyg {
+        background-color: #75f3c4;
+    }
+</style>
+<div class="container-fluid" style="margin-top: 10px;">
+    <div class="row" style="margin-bottom: 10px">
+        <span class="badge pointer btn pull-left ret">@Html.ActionLink("Retour à l'accueil","Index","Home")</span>
+    </div>
+    <div class="row">
+        @if (ViewBag.ListVoyages.Count > 0)
+        {
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="alert alert-info">
+                    Liste des des voyages de @ViewBag.Depart.Name à @ViewBag.Arrival.Name 
+                    @if (ViewBag.DepartTime != null)
+                    {
+                        <span>aux environ de @ViewBag.DepartTime :</span>
+                    }
+                    else
+                    {
+                        <span> Aujourd'hui :</span>
+                    }
+                </div>
+                @foreach (var voyage in (List<Voyage>)ViewBag.ListVoyages)
+                {
+                    <div class="item">
+                        <span class="pull-right">
+                            Voyage par 
+                            @if (voyage.Type == "BUS")
+                            {
+                                <span style="color: orange"><i class="fa fa-fw fa-bus"></i></span>
+                            }else if (voyage.Type == "TRAIN")
+                            {
+                                <span style="color: orange"><i class="fa fa-fw fa-train"></i></span>
+                            }else if (voyage.Type == "TAXI")
+                            {
+                                <span style="color: orange"><i class="fa fa-fw fa-taxi"></i></span>
+                            }else if (voyage.Type == "AVION")
+                            {
+                                <span style="color: orange"><i class="fa fa-fw fa-plane"></i></span>   
+                            }
+                        </span>
+                        <p>Nom de la compagnie: @voyage.Company.Name</p>
+                        <p class="" style="color: #e11;">Heure de depart: @voyage.DepartTime</p>
+                        <p class="" style="color: #e11;">Heure d'arrivé: @voyage.ArrivalTime</p>
+                        <div class="vyg container-fluid">
+                            <div class="row">
+                                <div class="col-md-6 col-xs-12 col-lg-6 col-sm-12">
+                                    <p> Depart :</p>
+                                    <p>De @voyage.Depart.Name</p>
+                                    <p>vers @voyage.DepartTime</p>
+                                </div>
+                                <div class="col-md-6 col-xs-12 col-lg-6 col-sm-12">
+                                    <p> Destination :</p>
+                                    <p>À @voyage.Arrival.Name</p>
+                                    <p>vers @voyage.ArrivalTime</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-xs-12 col-lg-6 col-sm-12">
+                                    <p>Le prix: <span class="badge">@voyage.Price Dhs</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-warning text-center">
+                Aucun voyage de @ViewBag.Depart à @ViewBag.Arrival
+                @if (ViewBag.Type != "all")
+                {
+                    <span>par @ViewBag.Type</span>
+                }
+                @if (ViewBag.departTime != null)
+                {
+                    <span>à @ViewBag.departTime</span>
+                }
+                n'a été trouvé
+            </div>
+        }
+    </div>
+</div>

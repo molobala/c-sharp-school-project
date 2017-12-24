@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "Login Page";
+    Layout = null;
+}
+<html>
+<head>
+    <title>Login - Admin </title>
+</head>
+</html>
+<div class="container">
+    @using (Html.BeginForm())
+    {
+        <div class="form-group">
+            @Html.Label("login",new {@class="control-label"})
+            @Html.TextBox("login","",new {@class="form-control",placeholder="Le login"})
+        </div>
+        <div class="form-group">
+            @Html.Label("password",new {@class="control-label"})
+            @Html.TextBox("password","",new {type="password",@class="form-control",placeholder="Le login"})
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-success">Login</button>
+        </div>
+    }
+  
+</div>

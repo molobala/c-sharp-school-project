@@ -1,0 +1,76 @@
+﻿@using Entity
+@model Entity.Voyage
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="container">
+    @using (Html.BeginForm("EditVoyage", "Admin", FormMethod.Post, new {@class = "form"}))
+    {
+        <div class="modal-body">
+            @Html.Hidden("id", @Model.Id)
+            <div class="form-group">
+                @Html.LabelFor(v => v.DepartId, new {@class = "control-label"})
+                @Html.DropDownListFor(v => v.DepartId, (SelectList) ViewBag.listVilles, new {@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.DepartId, "Error", new {@class = "alert alert-danger"})
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(v => v.ArrivalId, new {@class = "control-label"})
+                @Html.DropDownListFor(v => v.ArrivalId, (SelectList) ViewBag.listVilles, new {@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.ArrivalId, "Error", new {@class = "alert alert-danger"})
+            </div>
+            @*<div class="form-group">
+                @Html.Label("Le nom de la compagnie",new {@class="control-label"})
+                @Html.DropDownList("companyId",(SelectList)ViewBag.listCompanies,new {@class="form-control",id="companieId",onchange="changeCompany()"})
+            </div>*@
+            <div class="form-group">
+                @Html.LabelFor(v => v.CompanyId, new {@class = "control-label"})
+                @Html.DropDownListFor(v => v.CompanyId, (SelectList) ViewBag.listCompanies, new {@class = "form-control", id = "vehiculeId"})
+                @Html.ValidationMessageFor(model => model.CompanyId, "Error", new {@class = "alert alert-danger"})
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(v => v.DepartTime)
+                @Html.TextBoxFor(v => v.DepartTime, null, new {@class = "form-control full datetimepicker"})
+                @Html.LabelFor(v => v.ArrivalTime)
+                @Html.TextBoxFor(v => v.ArrivalTime, null, new {@class = "form-control full datetimepicker"})
+                @Html.ValidationMessageFor(v => v.DepartTime)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(v => v.Price)
+                @Html.TextBoxFor(v => v.Price, new {@class = "form-control"})
+                @Html.ValidationMessageFor(m => m.Price)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(v => v.Type)
+                @Html.DropDownListFor(v => v.Type, (SelectList) ViewBag.vehiculeTypes, new {@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.Type, "Error", new {@class = "alert alert-danger"})
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="row">
+                <span class="badge pointer btn pull-left ret">@Html.ActionLink("Go to Home", "Index", "Admin")</span>
+                <button type="submit" class="btn btn-success">Save</button>
+            </div>
+        </div>
+    }
+</div>
+@*<script type="text/javascript">
+    var changeCompany=function() {
+        console.log("Firing.....");
+        var id = $("#companieId").val();
+        $.ajax({
+            url: '/api'+'@Url.Action("getVehiculesFor","Rest")?companyId='+id,
+            method: "GET"
+        }).done((r) => {
+            console.log(r);
+            $("#vehiculeId").html("");
+            r.forEach(e => {
+                var el = $(document.createElement("option"));
+                el.attr("value", e.Id);
+                el.text(e.Name);
+                $("#vehiculeId").append(el);
+            })
+        }).fail(e => {
+            console.log(e);
+        });
+    }
+</script>*@

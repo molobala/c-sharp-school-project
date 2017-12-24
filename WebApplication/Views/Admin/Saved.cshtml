@@ -1,0 +1,24 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<style>
+    .ret {
+        background-color: #444;
+    }
+    .ret a {
+        color: #eee !important;
+    }
+    .ret a:hover {
+        text-decoration: none;
+    }
+</style>
+<div class="container" style="margin-top: 20px;">
+    <div>
+        <div class="center-block text-center">
+            <div class="alert @ViewBag.postInfoClass">@ViewBag.postInfo</div>
+        </div> 
+    </div>
+    <div class="row">
+        <span class="badge pointer btn pull-left ret">@Html.ActionLink("Go to Admin Panel","Index","Admin")</span>
+    </div>
+</div>

@@ -1,0 +1,243 @@
+@using System.Web.Mvc.Html
+@using Entity
+@{
+    ViewBag.Title = "Admin Home";
+    //ViewData["Title"] = "Admin Home";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<style>
+    .item {
+        border: 1px solid transparent;
+        padding: 10px 5px;
+        margin-bottom: 10px;
+        position: relative;
+        box-shadow: 0px 0px 4px #444;
+        background-color: #eee;
+    }
+    .bk1 {
+        box-shadow: 0 0 16px;
+    }
+    .bk1 .panel-body {
+        height:400px;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+</style>
+<div class="container-fluid" style="margin-top: 40px;">
+<div class="row">
+    @*Company*@
+    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-6">
+        <div class="panel panel-default panel-collapse bk1">
+            <div class="panel-heading">
+                <a href="@Url.Action("company", "admin")"><span class="text-center">Companies</span></a>
+                <span class="pointer pull-right" data-toggle="modal" data-target="#add-company"><i class="glyphicon glyphicon-plus"></i></span>
+            </div>
+            <div class="panel-body">
+                @if (((List<Company>) @ViewData["companies"]).Count != 0)
+                {
+                    foreach (var company in (List<Company>) @ViewData["companies"])
+                    {
+                        <div class="item">
+                            <span style="color: #e11;" onclick="del('@Url.Action("deleteCompany", "Admin", new {id = @company.Id})', 'Voulez vous vraiment supprimer cette compagnie?')" class="pull-right pointer">
+                                <i class="fa fa-fw fa-trash-o"></i>
+                            </span>
+                            <a href="@Url.Action("editCompany", "Admin", new {id = @company.Id})" class="pull-right pointer">
+                                <i class="fa fa-fw fa-edit"></i>
+                            </a>
+                            <p style="color: red;">Identifiant:@company.Id</p>
+                            <p>Nom de la compagnie: @company.Name</p>
+                            <p>Description: @company.Description</p>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p class="text-center">No company saved yet</p>
+                }
+            </div>
+        </div>
+        <div id="add-company" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-sm">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    @using (Html.BeginForm("SaveCompany", "Admin", FormMethod.Post, new {@class = "form"}))
+                    {
+                        <div class="modal-body">
+                            @Html.Hidden("cid", "1");
+                            <div class="form-group">
+                                <label for="cname">Company Name</label>
+                                <input type="text" placeholder="company name" id="cname" name="cname" class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="cdesc">Company Description</label>
+                                <textarea type="text" placeholder="company Description" id="cdesc" name="cdesc" class="form-control"></textarea>
+                            </div>
+                            @Html.Hidden("postType", "COMPANY");
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-default">Save</button>
+                            <button type="reset" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-6">
+        <div class="panel panel-default panel-collapse bk1">
+            <div class="panel-heading">
+                <span class="text-center">Ville</span>
+                <a class="pointer pull-right" href="@Url.Action("EditVille","admin")"><i class="glyphicon glyphicon-plus"></i></a>
+            </div>
+            <div class="panel-body">
+                @if (((List<Ville>) @ViewData["villes"]).Count != 0)
+                {
+                    foreach (var ville in (List<Ville>) @ViewData["villes"])
+                    {
+                        <div class="item">
+                            <span style="color: #e11;" onclick="del('@Url.Action("deleteVille", "Admin", new {id = @ville.Id})', 'Voulez vous vraiment supprimer cette compagnie?')" class="pull-right pointer">
+                                <i class="fa fa-fw fa-trash"></i>
+                            </span>
+                            <a href="@Url.Action("EditVille", "Admin", new {id = @ville.Id})" class="pull-right pointer">
+                                <i class="fa fa-fw fa-edit"></i>
+                            </a>
+                            <p style="color: red;">Identifiant:@ville.Id</p>
+                            <p>Nom de la ville: @ville.Name</p>
+                            <p>Description: @ville.Description</p>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p class="text-center">No Ville saved yet</p>
+                }
+            </div>
+        </div>
+        <div id="add-ville" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-sm">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    @using (Html.BeginForm("SaveVille", "Admin", FormMethod.Post, new {@class = "form"}))
+                    {
+                        <div class="modal-body">
+                            @Html.Hidden("ville.Id", "1");
+                            <div class="form-group">
+                                <label for="cname">Vehicule Name</label>
+                                <input type="text" placeholder="Ville name" id="cname" name="ville.Name" class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="cdesc">Vehicule Description</label>
+                                <textarea type="text" placeholder="Vehicule Description" id="cdesc" name="ville.Description" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-default">Save</button>
+                            <button type="reset" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    @*End Ville*@
+    @*Voyage*@
+    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-6">
+        <div class="panel panel-default panel-collapse bk1">
+            <div class="panel-heading">
+                <span class="text-center">Voyage</span>
+                <a class="pointer pull-right" href="@Url.Action("EditVoyage","admin")"><i class="glyphicon glyphicon-plus"></i></a>
+            </div>
+            <div class="panel-body">
+                @if (((List<Voyage>) @ViewData["voyages"]).Count != 0)
+                {
+                    foreach (var voyage in (List<Voyage>) @ViewData["voyages"])
+                    {
+                        <div class="item">
+                            <span style="color: #e11;" onclick="del('@Url.Action("deleteVoyage", "Admin", new {id = @voyage.Id})', 'Voulez vous vraiment supprimer cette compagnie?')" class="pull-right pointer">
+                                <i class="fa fa-fw fa-trash-o"></i>
+                            </span>
+                            <a href="@Url.Action("EditVoyage", "Admin", new {id = @voyage.Id})" class="pull-right pointer">
+                                <i class="fa fa-fw fa-edit"></i>
+                            </a>
+                            <p style="color: red;">Identifiant:@voyage.Id</p>
+                            <p>Nom de la compagnie: @voyage.Company.Name</p>
+                            <p>Heure de depart: @voyage.DepartTime</p>
+                            <p>Heure d'arrivee: @voyage.ArrivalTime</p>
+                            <p>Prix du voyage: @voyage.Price Dhs</p>
+                            <div class="vyg row">
+                                <div class="col-md-6 col-xs-12 col-lg-6 col-sm-12">
+                                    <p> Depart :</p>
+                                    <p>De @voyage.Depart.Name</p>
+                                    <p>vers @voyage.DepartTime</p>
+                                </div>
+                                <div class="col-md-6 col-xs-12 col-lg-6 col-sm-12">
+                                    <p> Arrive :</p>
+                                    <p>A @voyage.Arrival.Name</p>
+                                    <p>vers @voyage.ArrivalTime</p>
+                                </div>
+                            </div>
+                            <div>
+                                Type de voyage:
+                                <span class="pull-right">
+                                    Voyage par 
+                                    @if (voyage.Type == "BUS")
+                                    {
+                                        <span style="color: orange"><i class="fa fa-fw fa-bus"></i></span>
+                                    }else if (voyage.Type == "TRAIN")
+                                    {
+                                        <span style="color: orange"><i class="fa fa-fw fa-train"></i></span>
+                                    }else if (voyage.Type == "TAXI")
+                                    {
+                                        <span style="color: orange"><i class="fa fa-fw fa-taxi"></i></span>
+                                    }else if (voyage.Type == "AVION")
+                                    {
+                                        <span style="color: orange"><i class="fa fa-fw fa-plane"></i></span>   
+                                    }
+                                </span>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p class="text-center">No Voyage saved yet</p>
+                }
+            </div>
+        </div>
+    </div>
+    @*End voyage*@
+</div>
+</div>
+<!-- del Modal -->
+<button style="display: none;" id="openDelModel" data-toggle="modal" data-target="#delModal"></button>
+<div id="delModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body">
+                <p id="delContent">Voulez vraiment supprimer cet utilisateur</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="delConfirm">Oui</button>
+                <button type="button" class="btn btn-default" id="delReject" data-dismiss="modal">Non</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var selected;
+    var del=(callUrl,msg)=> {
+        msg = msg || "...";
+        console.log(callUrl,msg);
+        $("#delContent").html(msg);
+        $("#openDelModel").click();
+        $("#delConfirm").click(() => {
+            window.location.href = callUrl;
+        });
+        $("#delReject").click(() => {
+            console.log("Annulation de la suppresion");
+        });
+    }
+</script>

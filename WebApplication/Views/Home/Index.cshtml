@@ -1,0 +1,63 @@
+﻿@model List<Entity.Ville>
+@{
+    //ViewBag.Title = "Home Page";
+    ViewData["Title"] = "Home Page";
+}
+<style>
+    body {
+        background-image: url('/bg1.jpg');
+        -ms-background-repeat: no-repeat;
+        background-repeat: no-repeat;
+        -ms-background-position: center;
+        background-position: center;
+        -ms-background-size: cover;
+        background-size: cover;
+        height: 100%;
+    }
+     .home {
+         margin-top: 10%;
+         margin-bottom: 10%;
+     }
+    .label {
+        color: inherit;
+    }
+    footer {
+        background: #fff;
+      
+    }
+</style>
+<div class="container-fluid home">
+    @*<div class="row">
+        <a href="#"><span class="pull-right">Recherche avancer</span></a>
+    </div>*@
+    @using (@Html.BeginForm("Search", "Home"))
+    {
+        <div class="row" style="font-size: 1.2em;">
+            <div class="form-group">
+                <div class="col-xs-12 col-md-6 col-sm-6 col-lg-6">
+                    @Html.Label("Depart", "La ville de depart", new {@class = "label"})
+                    @Html.DropDownList("Depart", new SelectList(Model, "Name", "Name"), new {@class = "full form-control"})
+                </div>
+                <div class="col-xs-12 col-md-6 col-sm-6 col-lg-6">
+                    @Html.Label("Arrival", "La ville de destination", new {@class = "label"})
+                    @Html.DropDownList("Arrival", new SelectList(Model, "Name", "Name"), new {@class = "full form-control"})
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-xs-12 col-md-6 col-sm-6 col-lg-6">
+                    @Html.Label("DepartTime", "La date de depart", new {@class = "label"})
+                    @Html.TextBox("DepartTime", null, new {@class = "form-control full datetimepicker", placeholder = "La date de depart", autocomplete = "off"})
+                </div>
+                <div class="col-xs-12 col-md-6 col-sm-6 col-lg-6">
+                    @Html.Label("Type", "Le moyen de transport", new {@class = "label"})
+                    @Html.DropDownList("Type", (SelectList) @ViewBag.typesList, new {@class = "full form-control"})
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <button style="margin-top: 25px;" type="submit" class="btn btn-secondary pull-right">Chercher</button>
+        </div>
+    }
+</div>

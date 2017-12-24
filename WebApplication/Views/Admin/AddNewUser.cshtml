@@ -1,0 +1,26 @@
+﻿@model Entity.User
+
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container-fluid">
+    @using (Html.BeginForm())
+    {
+        <div class="form-group">
+            @Html.LabelFor(m=>m.Name)
+            @Html.TextBoxFor(m=>m.Name,"",new {@class="form-control",placeholder="Le nom"})
+            @Html.ValidationMessageFor(m=>m.Name)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m=>m.Email)
+            @Html.TextBoxFor(m=>m.Email,"",new {@class="form-control",placeholder="L'email"})
+            @Html.ValidationMessageFor(m=>m.Email)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m=>m.Password)
+            @Html.TextBoxFor(m=>m.Password,"",new {@class="form-control",placeholder="Le mot de passe"})
+            @Html.ValidationMessageFor(m=>m.Password)
+        </div>
+    }
+</div>
